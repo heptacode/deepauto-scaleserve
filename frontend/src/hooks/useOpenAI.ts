@@ -12,3 +12,27 @@ export function useOpenAI() {
 
   return openai;
 }
+
+export function useCompletion() {
+  const openai = useOpenAI();
+
+  function createCompletion(userContent: string) {
+    const completion = openai.chat.completions.create({
+      model: 'openai/gpt-4o-mini-2024-07-18,deepauto/qwq-32b',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are a helpful assistant.',
+        },
+        {
+          role: 'user',
+          content: userContent,
+        },
+      ],
+      stream: true,
+    });
+
+    return completion;
+  }
+  return { createCompletion };
+}
