@@ -1,12 +1,8 @@
-import OpenAI from 'openai';
 import { useEffect } from 'react';
+import { useOpenAI } from './hooks/useOpenAI';
 
 export function App() {
-  const openai = new OpenAI({
-    baseURL: import.meta.env.VITE_API_BASE_URL,
-    apiKey: import.meta.env.VITE_API_KEY,
-    dangerouslyAllowBrowser: true,
-  });
+  const openai = useOpenAI();
 
   useEffect(() => {
     (async () => {
