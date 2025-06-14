@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ArrowRightSVG from '../assets/icons/arrow-right.svg';
 
 export function ChatInputContainer({
   isDisabled,
@@ -42,18 +43,7 @@ export function ChatInputContainer({
             disabled={isDisabled}
             onClick={handleSubmit}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              aria-hidden="true"
-              data-slot="icon"
-              className="size-[18px] stroke-2 text-gray-50"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-            </svg>
+            <ArrowRightSVG className="size-[18px] stroke-2 text-gray-50" />
           </button>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import CloseSVG from '../assets/icons/close.svg';
 import { QueryRouting } from '../types';
 import { Badge } from './Badge';
 
@@ -25,21 +26,7 @@ export function QueryRoutingResult({ queryRouting }: { queryRouting: QueryRoutin
           aria-label="Close"
           onClick={() => setIsShow(false)}
         >
-          <svg
-            className="w-3 h-3"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 14 14"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-            />
-          </svg>
+          <CloseSVG className="w-3 h-3" />
         </button>
       </div>
 
