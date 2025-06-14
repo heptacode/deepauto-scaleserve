@@ -2,6 +2,7 @@ import Markdown from 'react-markdown';
 import { AssistantMessage, UserMessage } from '../types';
 import { Badge } from './Badge';
 import { ChatBubble } from './ChatBubble';
+import { QueryRoutingResult } from './QueryRoutingResult';
 
 export function User({ message }: { message: UserMessage }) {
   return (
@@ -14,9 +15,9 @@ export function User({ message }: { message: UserMessage }) {
 export function Assistant({ message }: { message: AssistantMessage }) {
   return (
     <div className="w-[90%] flex flex-col items-start gap-3">
-      <div className="flex">
+      <div className="flex gap-2">
         <Badge>{message.model}</Badge>
-        <button>See Scores</button>
+        {message.query_routing && <QueryRoutingResult queryRouting={message.query_routing} />}
       </div>
       <div className="gap-y-3 flex flex-col text-sm/[120%] font-medium text-gray-800 bg-white wrap-break-word">
         <Markdown>{message.content}</Markdown>
