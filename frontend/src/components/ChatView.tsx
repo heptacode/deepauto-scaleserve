@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useCompletion } from '../hooks/useOpenAI';
 import { AssistantMessage, FirstChunk, Message, Role, UserMessage } from '../types';
 import { ChatInputContainer } from './ChatInputContainer';
@@ -9,6 +9,11 @@ export function ChatView() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [lastCompletion, setLastCompletion] = useState<AssistantMessage | null>(null);
   const [messages, setMessages] = useState<Map<string, Message>>(new Map());
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [lastCompletion?.content]);
 
   async function handleChatInput(chatInput: string) {
     let firstChunk: FirstChunk = {} as FirstChunk;
@@ -68,6 +73,8 @@ export function ChatView() {
           return MessageByRole[message.role];
         })}
         {lastCompletion && <ChatMessageContainer.Assistant message={lastCompletion} />}
+
+        <div ref={bottomRef}></div>
       </div>
 
       <ChatInputContainer isDisabled={isLoading} onSubmit={chatInput => handleChatInput(chatInput)} />
