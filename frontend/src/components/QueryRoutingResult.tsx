@@ -22,7 +22,7 @@ export function QueryRoutingResult({ queryRouting }: { queryRouting: QueryRoutin
         <h2 className="text-lg font-semibold">Query Routing Result</h2>
         <button
           type="button"
-          className="ms-auto -mx-1.5 -my-1.5 bg-white justify-center items-center text-xl shrink-0 text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"
+          className="h-8 w-8 ms-auto -mx-1.5 -my-1.5 inline-flex justify-center items-center shrink-0 rounded-lg bg-white text-xl text-gray-400 hover:text-gray-900 focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 cursor-pointer"
           aria-label="Close"
           onClick={() => setIsShow(false)}
         >

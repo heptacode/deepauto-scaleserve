@@ -18,7 +18,7 @@ export function ChatInputContainer({
   }
 
   function handleSubmit() {
-    if (isDisabled) {
+    if (isDisabled || !chatInput.trim().length) {
       return;
     }
 
@@ -40,7 +40,7 @@ export function ChatInputContainer({
           <div></div>
           <button
             className="size-[34px] flex items-center justify-center rounded-full bg-gray-800 p-1 disabled:cursor-not-allowed disabled:bg-gray-300"
-            disabled={isDisabled}
+            disabled={isDisabled || !chatInput.trim().length}
             onClick={handleSubmit}
           >
             <ArrowRightSVG className="size-[18px] stroke-2 text-gray-50" />
