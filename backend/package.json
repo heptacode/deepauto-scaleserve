@@ -1,0 +1,14 @@
+{
+  "name": "deepauto-scaleserve-backend",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "tsx watch src/index",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.3"
+  },
+  "packageManager": "pnpm@10.11.0"
+}

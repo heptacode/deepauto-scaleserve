@@ -1,6 +1,5 @@
 {
-  "name": "deepauto-scaleserve",
-  "version": "1.0.0",
+  "name": "deepauto-scaleserve-frontend",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,7 +7,6 @@
     "build": "vite build",
     "preview": "vite preview"
   },
-  "packageManager": "pnpm@10.11.0+sha512.6540583f41cc5f628eb3d9773ecee802f4f9ef9923cc45b69890fb47991d4b092964694ec3a4f738a420c918a333062c8b925d312f42e4f0c263eb603551f977",
   "dependencies": {
     "openai": "^5.3.0",
     "react": "^19.1.0",
@@ -17,17 +15,14 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.10",
-    "@types/node": "^24.0.1",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.5.2",
-    "eslint": "^8.57.1",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
-    "prettier": "^3.5.3",
     "tailwindcss": "^4.1.10",
-    "typescript": "^5.8.3",
     "vite": "^6.3.5",
     "vite-plugin-svgr": "^4.3.0"
-  }
+  },
+  "packageManager": "pnpm@10.11.0"
 }
