@@ -26,3 +26,14 @@ export interface AssistantMessage extends BaseMessage, QueryRouting {
   model: string;
 }
 export type Message = UserMessage | AssistantMessage;
+
+export interface Chat {
+  id: string;
+  title: string;
+  createdAt: number;
+  messages: Message[];
+}
+
+export interface ChatsAPIResponse {
+  chats: Chat[];
+}
