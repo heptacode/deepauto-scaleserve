@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useCompletion } from '../hooks/useOpenAI';
-import { AssistantMessage, FirstChunk, Message, Role, UserMessage } from '../types';
+import type { AssistantMessage, FirstChunk, Message, Role, UserMessage } from '../types';
 import { ChatInputContainer } from './ChatInputContainer';
 import * as ChatMessageContainer from './ChatMessageContainer';
 

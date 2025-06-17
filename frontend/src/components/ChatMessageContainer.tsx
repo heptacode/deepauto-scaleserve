@@ -1,5 +1,5 @@
 import Markdown from 'react-markdown';
-import { AssistantMessage, UserMessage } from '../types';
+import type { AssistantMessage, UserMessage } from '../types';
 import { Badge } from './Badge';
 import { ChatBubble } from './ChatBubble';
 import { QueryRoutingResult } from './QueryRoutingResult';
