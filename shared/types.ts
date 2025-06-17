@@ -15,7 +15,7 @@ export interface QueryRouting {
 export interface BaseMessage {
   id: string;
   role: Role;
-  created: number;
+  createdAt: number;
   content: string;
 }
 export interface UserMessage extends BaseMessage {

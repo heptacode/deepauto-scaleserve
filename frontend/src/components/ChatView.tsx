@@ -23,7 +23,7 @@ export function ChatView() {
       new Map(prev).set(new Date().getTime().toString(), {
         id: new Date().getTime().toString(),
         role: 'user',
-        created: new Date().getTime(),
+        createdAt: new Date().getTime(),
         content: chatInput,
       } satisfies UserMessage)
     );
@@ -42,7 +42,7 @@ export function ChatView() {
           setLastCompletion(prev =>
             prev
               ? { ...prev, content: prev.content + delta }
-              : { id: chunk.id, role: 'assistant', created: chunk.created, model: chunk.model, content: delta }
+              : { id: chunk.id, role: 'assistant', createdAt: chunk.created, model: chunk.model, content: delta }
           );
         }
       }
@@ -50,7 +50,7 @@ export function ChatView() {
         new Map(prev).set(firstChunk.id, {
           id: firstChunk.id,
           role: 'assistant',
-          created: firstChunk.created,
+          createdAt: firstChunk.created,
           model: firstChunk.model,
           query_routing: firstChunk.query_routing,
           content,
