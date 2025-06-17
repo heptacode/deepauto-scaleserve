@@ -4,7 +4,7 @@ import type { AssistantMessage, FirstChunk, Message, Role, UserMessage } from '.
 import { ChatInputContainer } from './ChatInputContainer';
 import * as ChatMessageContainer from './ChatMessageContainer';
 
-export function ChatView() {
+export function ChatContentView() {
   const { createCompletion } = useCompletion();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [lastCompletion, setLastCompletion] = useState<AssistantMessage | null>(null);
@@ -63,7 +63,7 @@ export function ChatView() {
   }
 
   return (
-    <>
+    <div className="max-w-[750px] max-h-full size-full p-6 flex flex-col flex-1 basis-0 justify-center">
       <div className="size-full px-3 py-6 gap-y-4 flex flex-col overflow-y-auto transition-[height] duration-500 ease-in-out">
         {Array.from(messages).map(([id, message]) => {
           const MessageByRole: Record<Role, React.ReactNode> = {
@@ -78,6 +78,6 @@ export function ChatView() {
       </div>
 
       <ChatInputContainer isDisabled={isLoading} onSubmit={chatInput => handleChatInput(chatInput)} />
-    </>
+    </div>
   );
 }
