@@ -1,20 +1,65 @@
+import { nanoid } from 'nanoid';
 import { useEffect, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useCompletion } from '../hooks/useCompletion';
+import { createChat, createMessage, getChat } from '../remotes/chats';
 import { useChatStore } from '../stores/chatStore';
 import type { AssistantMessage, Role, UserMessage } from '../types';
 import { ChatInputContainer } from './ChatInputContainer';
 import * as ChatMessageContainer from './ChatMessageContainer';
 
 export function ChatContentView() {
+  const { chatId } = useParams<{ chatId: string }>();
+  const navigate = useNavigate();
   const { lastCompletion, streamCompletion } = useCompletion();
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const isStreaming = useChatStore(s => s.isStreaming);
   const messages = useChatStore(s => s.messages);
-  const appendUserMessage = useChatStore(s => s.appendUserMessage);
+  const setMessage = useChatStore(s => s.setMessage);
+  const setMessages = useChatStore(s => s.setMessages);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [lastCompletion?.content]);
+
+  useEffect(() => {
+    // Fetch messages from chat
+    if (chatId) {
+      (async () => {
+        try {
+          const chat = await getChat(chatId);
+          setMessages(chat.messages);
+          setTimeout(() => {
+            bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        } catch {
+          navigate('/');
+        }
+      })();
+    }
+  }, [chatId, setMessages, navigate]);
+
+  async function appendUserMessage(chatInput: string) {
+    let resolvedChatId = chatId;
+    if (!resolvedChatId) {
+      const newChat = await createChat();
+      console.log(newChat);
+      resolvedChatId = newChat.id;
+      navigate(`/${resolvedChatId}`);
+    }
+    const messageId = nanoid();
+    const message: UserMessage = {
+      id: messageId,
+      chatId: resolvedChatId,
+      role: 'user',
+      createdAt: new Date().getTime(),
+      content: chatInput,
+    };
+    await createMessage(message);
+    setMessage(messageId, message);
+
+    return message;
+  }
 
   return (
     <div className="size-full flex justify-center">
@@ -36,9 +81,9 @@ export function ChatContentView() {
 
         <ChatInputContainer
           isDisabled={isStreaming}
-          onSubmit={chatInput => {
-            appendUserMessage(chatInput);
-            streamCompletion(chatInput);
+          onSubmit={async chatInput => {
+            const message = await appendUserMessage(chatInput);
+            streamCompletion(message);
           }}
         />
       </div>

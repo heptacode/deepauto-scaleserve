@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ComposeSVG from '../assets/icons/compose.svg';
-import { getChats } from '../remotes/chats';
-import { Chat } from '../types';
+import { createChat, getChats } from '../remotes/chats';
+import { ChatList } from '../types';
 
 export function ChatListView() {
-  const [chats, setChats] = useState<Chat[]>([]);
+  const [chats, setChats] = useState<ChatList[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,6 +18,10 @@ export function ChatListView() {
         <button
           type="button"
           className="p-2 w-full gap-1 flex items-center rounded-lg text-gray-900 hover:bg-gray-100 cursor-pointer"
+          onClick={async () => {
+            const chat = await createChat();
+            navigate(`/${chat.id}`);
+          }}
         >
           <ComposeSVG />
           Create Chat

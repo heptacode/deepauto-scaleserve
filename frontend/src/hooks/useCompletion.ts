@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { createMessage } from '../remotes/chats';
 import { useChatStore } from '../stores/chatStore';
-import { AssistantMessage, FirstChunk } from '../types';
+import { AssistantMessage, FirstChunk, UserMessage } from '../types';
 import { useOpenAI } from './useOpenAI';
 
 export function useCompletion() {
@@ -28,13 +29,13 @@ export function useCompletion() {
     return completion;
   }
 
-  async function streamCompletion(chatInput: string) {
+  async function streamCompletion(userMessage: UserMessage) {
     let firstChunk: FirstChunk = {} as FirstChunk;
     let content = '';
 
     setIsStreaming(true);
     try {
-      const completion = await createCompletion(chatInput);
+      const completion = await createCompletion(userMessage.content);
       for await (const chunk of completion) {
         if (Object.keys(firstChunk).length === 0) {
           firstChunk = { ...chunk };
@@ -46,19 +47,29 @@ export function useCompletion() {
           setLastCompletion(prev =>
             prev
               ? { ...prev, content: prev.content + delta }
-              : { id: chunk.id, role: 'assistant', createdAt: chunk.created, model: chunk.model, content: delta }
+              : {
+                  id: chunk.id,
+                  chatId: userMessage.chatId,
+                  role: 'assistant',
+                  createdAt: chunk.created,
+                  model: chunk.model,
+                  content: delta,
+                }
           );
         }
       }
 
-      setMessage(firstChunk.id, {
+      const message: AssistantMessage = {
         id: firstChunk.id,
+        chatId: userMessage.chatId,
         role: 'assistant',
         createdAt: firstChunk.created,
         model: firstChunk.model,
         query_routing: firstChunk.query_routing,
         content,
-      } satisfies AssistantMessage);
+      };
+      setMessage(firstChunk.id, message);
+      await createMessage(message);
     } finally {
       setLastCompletion(null);
       setIsStreaming(false);

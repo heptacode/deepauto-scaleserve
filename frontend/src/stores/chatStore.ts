@@ -1,14 +1,13 @@
-import { nanoid } from 'nanoid';
 import { useStore } from 'zustand';
 import { createStore } from 'zustand/vanilla';
-import { Message, UserMessage } from '../types';
+import { Message } from '../types';
 
 interface ChatStore {
   isStreaming: boolean;
   messages: Map<Message['id'], Message>;
   setIsStreaming: (isStreaming: boolean) => void;
   setMessage: (messageId: Message['id'], message: Message) => void;
-  appendUserMessage: (content: string) => void;
+  setMessages: (messages: Map<Message['id'], Message>) => void;
 }
 
 export const chatStore = createStore<ChatStore>()(set => ({
@@ -16,18 +15,7 @@ export const chatStore = createStore<ChatStore>()(set => ({
   messages: new Map(),
   setIsStreaming: isStreaming => set({ isStreaming }),
   setMessage: (messageId, message) => set(state => ({ messages: new Map(state.messages).set(messageId, message) })),
-  appendUserMessage: content =>
-    set(state => {
-      const messageId = nanoid();
-      return {
-        messages: new Map(state.messages).set(messageId, {
-          id: messageId,
-          role: 'user',
-          createdAt: new Date().getTime(),
-          content,
-        } satisfies UserMessage),
-      };
-    }),
+  setMessages: messages => set({ messages }),
 }));
 
 export function useChatStore(): ChatStore;
