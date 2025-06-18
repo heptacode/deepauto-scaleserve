@@ -1,8 +1,9 @@
+import { useQuery } from '@tanstack/react-query';
 import { nanoid } from 'nanoid';
 import { useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCompletion } from '../hooks/useCompletion';
-import { createChat, createMessage, getChat } from '../remotes/chats';
+import { createChat, createMessage, getChat, getChats } from '../remotes/chats';
 import { useChatStore } from '../stores/chatStore';
 import type { AssistantMessage, Role, UserMessage } from '../types';
 import { ChatInputContainer } from './ChatInputContainer';
@@ -10,6 +11,8 @@ import * as ChatMessageContainer from './ChatMessageContainer';
 
 export function ChatContentView() {
   const { chatId } = useParams<{ chatId: string }>();
+  const { refetch: refetchChats } = useQuery(getChats.queryOptions());
+  const { data: chat, isError } = useQuery(getChat.queryOptions(chatId));
   const navigate = useNavigate();
   const { lastCompletion, streamCompletion } = useCompletion();
   const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -23,29 +26,24 @@ export function ChatContentView() {
   }, [lastCompletion?.content]);
 
   useEffect(() => {
-    // Fetch messages from chat
-    if (chatId) {
-      (async () => {
-        try {
-          const chat = await getChat(chatId);
-          setMessages(chat.messages);
-          setTimeout(() => {
-            bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-          }, 100);
-        } catch {
-          navigate('/');
-        }
-      })();
+    if (isError) {
+      navigate('/', { replace: true });
     }
-  }, [chatId, setMessages, navigate]);
+    if (chat) {
+      setMessages(chat.messages);
+      setTimeout(() => {
+        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  }, [isError, chat, navigate, setMessages]);
 
   async function appendUserMessage(chatInput: string) {
     let resolvedChatId = chatId;
     if (!resolvedChatId) {
       const newChat = await createChat();
-      console.log(newChat);
       resolvedChatId = newChat.id;
       navigate(`/${resolvedChatId}`);
+      refetchChats();
     }
     const messageId = nanoid();
     const message: UserMessage = {

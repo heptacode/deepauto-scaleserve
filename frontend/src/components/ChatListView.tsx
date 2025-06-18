@@ -1,16 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import ComposeSVG from '../assets/icons/compose.svg';
 import { createChat, getChats } from '../remotes/chats';
-import { ChatList } from '../types';
 
 export function ChatListView() {
-  const [chats, setChats] = useState<ChatList[]>([]);
+  const { data: chats, refetch } = useQuery(getChats.queryOptions());
   const navigate = useNavigate();
-
-  useEffect(() => {
-    getChats().then(setChats);
-  }, []);
 
   return (
     <aside>
@@ -21,6 +16,7 @@ export function ChatListView() {
           onClick={async () => {
             const chat = await createChat();
             navigate(`/${chat.id}`);
+            refetch();
           }}
         >
           <ComposeSVG />
@@ -31,7 +27,7 @@ export function ChatListView() {
 
         <h6 className="text-sm text-gray-400">Chats</h6>
         <ul className="space-y-1 font-medium">
-          {chats.map(chat => (
+          {chats?.map(chat => (
             <li key={chat.id}>
               <a
                 href={`/${chat.id}`}
