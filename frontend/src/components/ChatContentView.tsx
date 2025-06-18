@@ -63,21 +63,25 @@ export function ChatContentView() {
   }
 
   return (
-    <div className="max-w-[750px] max-h-full size-full p-6 flex flex-col flex-1 basis-0 justify-center">
-      <div className="size-full px-3 py-6 gap-y-4 flex flex-col overflow-y-auto transition-[height] duration-500 ease-in-out">
-        {Array.from(messages).map(([id, message]) => {
-          const MessageByRole: Record<Role, React.ReactNode> = {
-            user: <ChatMessageContainer.User key={id} message={message as UserMessage} />,
-            assistant: <ChatMessageContainer.Assistant key={id} message={message as AssistantMessage} />,
-          };
-          return MessageByRole[message.role];
-        })}
-        {lastCompletion && <ChatMessageContainer.Assistant message={lastCompletion} />}
+    <div className="size-full flex justify-center overflow-y-hidden">
+      <div className="max-w-[750px] flex flex-col flex-1 basis-0 justify-center items-center">
+        <div
+          className={`w-full ${messages.size && 'h-full '} p-10 gap-y-4 flex flex-col transition-[height] duration-500 ease-in-out overflow-y-auto`}
+        >
+          {Array.from(messages).map(([id, message]) => {
+            const MessageByRole: Record<Role, React.ReactNode> = {
+              user: <ChatMessageContainer.User key={id} message={message as UserMessage} />,
+              assistant: <ChatMessageContainer.Assistant key={id} message={message as AssistantMessage} />,
+            };
+            return MessageByRole[message.role];
+          })}
+          {lastCompletion && <ChatMessageContainer.Assistant message={lastCompletion} />}
 
-        <div ref={bottomRef}></div>
+          <div ref={bottomRef}></div>
+        </div>
+
+        <ChatInputContainer isDisabled={isLoading} onSubmit={chatInput => handleChatInput(chatInput)} />
       </div>
-
-      <ChatInputContainer isDisabled={isLoading} onSubmit={chatInput => handleChatInput(chatInput)} />
     </div>
   );
 }

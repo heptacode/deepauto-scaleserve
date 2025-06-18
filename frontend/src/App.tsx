@@ -3,7 +3,7 @@ import { ChatListView } from './components/ChatListView';
 
 export function App() {
   return (
-    <main className="min-w-[550px] h-full flex justify-center">
+    <main className="min-w-[550px] size-full flex">
       <ChatListView />
       <ChatContentView />
     </main>
