@@ -14,6 +14,7 @@ export interface QueryRouting {
 
 export interface BaseMessage {
   id: string;
+  chatId: string;
   role: Role;
   createdAt: number;
   content: string;
@@ -31,9 +32,18 @@ export interface Chat {
   id: string;
   title: string;
   createdAt: number;
+  messages: Map<Message['id'], Message>;
+}
+
+export type ChatList = Pick<Chat, 'id' | 'title' | 'createdAt'>;
+
+export interface APIChat {
+  id: string;
+  title: string;
+  createdAt: number;
   messages: Message[];
 }
 
 export interface DB {
-  chats: Chat[];
+  chats: APIChat[];
 }
