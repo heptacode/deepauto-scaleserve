@@ -1,15 +1,14 @@
 import { APIChat, Chat, ChatList, Message } from '../types';
-
-const BASE_URL = import.meta.env.VITE_APP_API_BASE_URL;
+import { axios } from '../utils/http';
 
 export async function getChats(): Promise<ChatList[]> {
-  const response = await fetch(`${BASE_URL}/chats`);
-  return (await response.json()) as ChatList[];
+  const response = await axios.get<ChatList[]>('/chats');
+  return response.data;
 }
 
 export async function createChat(): Promise<Chat> {
-  const response = await fetch(`${BASE_URL}/chats`, { method: 'POST' });
-  const apiChat = (await response.json()) as APIChat;
+  const response = await axios.post<APIChat>('/chats');
+  const apiChat = response.data;
   return {
     ...apiChat,
     messages: new Map(apiChat.messages?.map(message => [message.id, message]) ?? []),
@@ -17,11 +16,11 @@ export async function createChat(): Promise<Chat> {
 }
 
 export async function getChat(chatId: string): Promise<Chat> {
-  const response = await fetch(`${BASE_URL}/chats/${chatId}`);
-  if (!response.ok) {
+  const response = await axios.get<APIChat>(`/chats/${chatId}`);
+  if (response.status === 404) {
     throw new Error('Chat not found');
   }
-  const apiChat = (await response.json()) as APIChat;
+  const apiChat = response.data;
   return {
     ...apiChat,
     messages: new Map(apiChat.messages?.map(message => [message.id, message]) ?? []),
@@ -29,10 +28,6 @@ export async function getChat(chatId: string): Promise<Chat> {
 }
 
 export async function createMessage(message: Message): Promise<Message> {
-  const response = await fetch(`${BASE_URL}/chats/${message.chatId}/messages`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message }),
-  });
-  return (await response.json()) as Message;
+  const response = await axios.post<Message>(`/chats/${message.chatId}/messages`, { message });
+  return response.data;
 }
