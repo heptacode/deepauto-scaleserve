@@ -27,7 +27,7 @@ export function ChatInputContainer({
   }
 
   return (
-    <div className="w-full flex flex-col gap-y-2 px-6 pb-6">
+    <div className="max-w-[750px]  w-full flex flex-col gap-y-2 px-6 pb-6">
       <div className="px-3 py-2 flex flex-col rounded-lg border border-gray-100 bg-gray-50">
         <textarea
           className="min-h-16 max-h-[200px] w-full px-3 py-2 field-sizing-content flex resize-none text-[14px] font-medium text-gray-800 outline-hidden placeholder:text-gray-500"
