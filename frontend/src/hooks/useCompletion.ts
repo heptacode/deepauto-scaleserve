@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useChatStore } from '../stores/chatStore';
-import { AssistantMessage, FirstChunk, UserMessage } from '../types';
+import { AssistantMessage, FirstChunk } from '../types';
 import { useOpenAI } from './useOpenAI';
 
 export function useCompletion() {
@@ -31,13 +31,6 @@ export function useCompletion() {
   async function streamCompletion(chatInput: string) {
     let firstChunk: FirstChunk = {} as FirstChunk;
     let content = '';
-
-    setMessage(new Date().getTime().toString(), {
-      id: new Date().getTime().toString(),
-      role: 'user',
-      createdAt: new Date().getTime(),
-      content: chatInput,
-    } satisfies UserMessage);
 
     setIsStreaming(true);
     try {
@@ -71,5 +64,6 @@ export function useCompletion() {
       setIsStreaming(false);
     }
   }
+
   return { lastCompletion, createCompletion, streamCompletion };
 }
