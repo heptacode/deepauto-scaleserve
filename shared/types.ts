@@ -34,6 +34,6 @@ export interface Chat {
   messages: Message[];
 }
 
-export interface ChatsAPIResponse {
+export interface DB {
   chats: Chat[];
 }
