@@ -1,11 +1,13 @@
-import { ChatContentView } from './components/ChatContentView';
-import { ChatListView } from './components/ChatListView';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ChatPage } from './pages/ChatPage';
 
 export function App() {
   return (
-    <main className="min-w-[550px] size-full flex">
-      <ChatListView />
-      <ChatContentView />
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<ChatPage />} />
+        <Route path="/:chatId" element={<ChatPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
