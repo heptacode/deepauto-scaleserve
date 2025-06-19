@@ -1,5 +1,5 @@
-import { ChatContentView } from '../components/ChatContentView';
-import { ChatListView } from '../components/ChatListView';
+import { ChatContentView } from '../components/ChatContentView.js';
+import { ChatListView } from '../components/ChatListView.js';
 
 export function ChatPage() {
   return (

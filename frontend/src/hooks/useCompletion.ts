@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { createMessage } from '../remotes/chats';
-import { useChatStore } from '../stores/chatStore';
-import { AssistantMessage, FirstChunk, UserMessage } from '../types';
-import { useOpenAI } from './useOpenAI';
+import { createMessage } from '../remotes/chats.js';
+import { useChatStore } from '../stores/chatStore.js';
+import { AssistantMessage, FirstChunk, UserMessage } from '../types.js';
+import { useOpenAI } from './useOpenAI.js';
 
 export function useCompletion() {
   const openai = useOpenAI();

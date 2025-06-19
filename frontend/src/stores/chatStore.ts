@@ -1,6 +1,6 @@
 import { useStore } from 'zustand';
 import { createStore } from 'zustand/vanilla';
-import { Message } from '../types';
+import { Message } from '../types.js';
 
 interface ChatStore {
   isStreaming: boolean;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import CloseSVG from '../assets/icons/close.svg';
-import type { QueryRouting } from '../types';
-import { Badge } from './Badge';
+import type { QueryRouting } from '../types.js';
+import { Badge } from './Badge.js';
 
 const MAX_SCORE = 5.0;
 

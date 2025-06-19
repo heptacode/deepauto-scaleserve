@@ -1,6 +1,6 @@
 import { UseQueryOptions } from '@tanstack/react-query';
-import { APIChat, Chat, ChatList, Message } from '../types';
-import { axios } from '../utils/http';
+import { APIChat, Chat, ChatList, Message } from '../types.js';
+import { axios } from '../utils/http.js';
 
 export async function getChats(): Promise<ChatList[]> {
   const response = await axios.get<ChatList[]>(getChats.apiPath());

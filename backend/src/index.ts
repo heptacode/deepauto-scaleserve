@@ -2,8 +2,8 @@ import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import ChatRouter from './chat/chat.router';
-import { loadDb } from './db';
+import ChatRouter from './chat/chat.router.js';
+import { loadDb } from './db.js';
 
 const PORT = 3000;
 

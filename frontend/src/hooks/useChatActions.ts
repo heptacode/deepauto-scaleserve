@@ -1,9 +1,9 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { nanoid } from 'nanoid';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createChat, createMessage, getChats } from '../remotes/chats';
-import { useChatStore } from '../stores/chatStore';
-import type { UserMessage } from '../types';
+import { createChat, createMessage, getChats } from '../remotes/chats.js';
+import { useChatStore } from '../stores/chatStore.js';
+import type { UserMessage } from '../types.js';
 
 export function useChatActions() {
   const { chatId: paramChatId } = useParams<{ chatId: string }>();

@@ -1,8 +1,8 @@
 import Markdown from 'react-markdown';
-import type { AssistantMessage, UserMessage } from '../types';
-import { Badge } from './Badge';
-import { ChatBubble } from './ChatBubble';
-import { QueryRoutingResult } from './QueryRoutingResult';
+import type { AssistantMessage, UserMessage } from '../types.js';
+import { Badge } from './Badge.js';
+import { ChatBubble } from './ChatBubble.js';
+import { QueryRoutingResult } from './QueryRoutingResult.js';
 
 export function User({ message }: { message: UserMessage }) {
   return (

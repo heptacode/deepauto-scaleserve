@@ -1,6 +1,6 @@
 import { Low } from 'lowdb';
 import { JSONFile } from 'lowdb/node';
-import type { DB } from './types';
+import type { DB } from './types.js';
 
 const DB_FILE_NAME = 'db.json';
 

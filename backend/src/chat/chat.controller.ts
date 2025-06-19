@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { nanoid } from 'nanoid';
-import { db } from '../db';
-import { APIChat } from '../types';
+import { db } from '../db.js';
+import { APIChat } from '../types.js';
 
 /**
  * Get all chat sessions

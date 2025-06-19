@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ArrowRightSVG from '../assets/icons/arrow-right.svg';
-import { useChatStore } from '../stores/chatStore';
-import { Toggle } from './Toggle';
+import { useChatStore } from '../stores/chatStore.js';
+import { Toggle } from './Toggle.js';
 
 export function ChatInputContainer({
   isDisabled,

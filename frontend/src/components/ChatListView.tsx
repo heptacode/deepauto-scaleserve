@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import ComposeSVG from '../assets/icons/compose.svg';
-import { createChat, getChats } from '../remotes/chats';
+import { createChat, getChats } from '../remotes/chats.js';
 
 export function ChatListView() {
   const { chatId: paramChatId } = useParams<{ chatId: string }>();
