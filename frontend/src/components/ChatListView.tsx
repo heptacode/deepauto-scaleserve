@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ComposeSVG from '../assets/icons/compose.svg';
 import { createChat, getChats } from '../remotes/chats';
 
 export function ChatListView() {
+  const { chatId: paramChatId } = useParams<{ chatId: string }>();
   const { data: chats, refetch } = useQuery(getChats.queryOptions());
   const navigate = useNavigate();
 
@@ -31,10 +32,12 @@ export function ChatListView() {
             <li key={chat.id}>
               <a
                 href={`/${chat.id}`}
-                className="p-2 flex items-center rounded-lg text-gray-900 hover:bg-gray-100"
+                className={`p-2 flex items-center rounded-lg text-gray-900 hover:bg-gray-100 ${chat.id === paramChatId && 'bg-gray-200 hover:bg-gray-200'}`}
                 onClick={e => {
                   e.preventDefault();
-                  navigate(`/${chat.id}`);
+                  if (chat.id !== paramChatId) {
+                    navigate(`/${chat.id}`);
+                  }
                 }}
               >
                 {chat.title}
