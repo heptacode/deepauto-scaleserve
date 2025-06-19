@@ -25,7 +25,7 @@ export function ChatListView() {
 
         <div className="my-4"></div>
 
-        <h6 className="text-sm text-gray-400">Chats</h6>
+        <h6 className="mb-1 text-sm text-gray-400">Chats</h6>
         <ul className="space-y-1 font-medium">
           {chats?.map(chat => (
             <li key={chat.id}>
