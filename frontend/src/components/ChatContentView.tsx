@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import { nanoid } from 'nanoid';
 import { useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useChatActions } from '../hooks/useChatActions';
 import { useCompletion } from '../hooks/useCompletion';
-import { createChat, createMessage, getChat, getChats } from '../remotes/chats';
+import { useScrollToBottom } from '../hooks/useScrollToBottom';
+import { getChat } from '../remotes/chats';
 import { useChatStore } from '../stores/chatStore';
 import type { AssistantMessage, Role, UserMessage } from '../types';
 import { ChatInputContainer } from './ChatInputContainer';
@@ -11,56 +12,32 @@ import * as ChatMessageContainer from './ChatMessageContainer';
 
 export function ChatContentView() {
   const { chatId } = useParams<{ chatId: string }>();
-  const { refetch: refetchChats } = useQuery(getChats.queryOptions());
-  const { data: chat, isError } = useQuery(getChat.queryOptions(chatId));
   const navigate = useNavigate();
-  const { lastCompletion, streamCompletion } = useCompletion();
+  const { data: chat, isError } = useQuery(getChat.queryOptions(chatId));
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const isStreaming = useChatStore(s => s.isStreaming);
   const isAutoScroll = useChatStore(s => s.isAutoScroll);
   const messages = useChatStore(s => s.messages);
-  const setMessage = useChatStore(s => s.setMessage);
   const setMessages = useChatStore(s => s.setMessages);
 
-  useEffect(() => {
-    if (isAutoScroll) {
-      bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [isAutoScroll, lastCompletion?.content]);
+  const { lastCompletion, streamCompletion } = useCompletion();
+  const { appendUserMessage } = useChatActions();
+  const { triggerScroll } = useScrollToBottom([lastCompletion?.content], { ref: bottomRef, enabled: isAutoScroll });
 
   useEffect(() => {
     if (isError) {
       navigate('/', { replace: true });
-    }
-    if (chat) {
+    } else if (chat) {
       setMessages(chat.messages);
-      setTimeout(() => {
-        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
     }
   }, [isError, chat, navigate, setMessages]);
 
-  async function appendUserMessage(chatInput: string) {
-    let resolvedChatId = chatId;
-    if (!resolvedChatId) {
-      const newChat = await createChat();
-      resolvedChatId = newChat.id;
-      navigate(`/${resolvedChatId}`);
-      refetchChats();
+  useEffect(() => {
+    if (chat) {
+      const timer = setTimeout(triggerScroll, 100);
+      return () => clearTimeout(timer);
     }
-    const messageId = nanoid();
-    const message: UserMessage = {
-      id: messageId,
-      chatId: resolvedChatId,
-      role: 'user',
-      createdAt: new Date().getTime(),
-      content: chatInput,
-    };
-    await createMessage(message);
-    setMessage(messageId, message);
-
-    return message;
-  }
+  }, [chat, triggerScroll]);
 
   return (
     <div className="size-full flex justify-center">
