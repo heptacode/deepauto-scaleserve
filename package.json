@@ -1,6 +1,11 @@
 {
   "name": "deepauto-scaleserve",
   "private": true,
+  "scripts": {
+    "dev": "pnpm recursive run dev",
+    "build": "pnpm recursive run build",
+    "preview": "pnpm build && pnpm recursive run preview"
+  },
   "dependencies": {
     "nanoid": "^5.1.5"
   },

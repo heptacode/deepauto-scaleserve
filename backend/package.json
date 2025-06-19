@@ -1,11 +1,12 @@
 {
-  "name": "deepauto-scaleserve-backend",
+  "name": "backend",
   "private": true,
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "start": "tsx watch src/index",
-    "build": "tsc"
+    "dev": "tsx watch --clear-screen=false src/index.js",
+    "build": "tsc",
+    "preview": "node dist/index"
   },
   "dependencies": {
     "cors": "^2.8.5",
