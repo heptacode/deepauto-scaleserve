@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ArrowRightSVG from '../assets/icons/arrow-right.svg';
+import { useChatStore } from '../stores/chatStore';
 
 export function ChatInputContainer({
   isDisabled,
@@ -8,6 +9,8 @@ export function ChatInputContainer({
   isDisabled?: boolean;
   onSubmit?: (chatInput: string) => void;
 }) {
+  const isAutoScroll = useChatStore(s => s.isAutoScroll);
+  const toggleAutoScroll = useChatStore(s => s.toggleAutoScroll);
   const [chatInput, setChatInput] = useState<string>('What are some highly rated restaurants in San Francisco?');
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
@@ -37,7 +40,12 @@ export function ChatInputContainer({
           onKeyDown={handleKeyDown}
         ></textarea>
         <div className="gap-x-[10px] flex items-end justify-between">
-          <div></div>
+          <label className="inline-flex items-center cursor-pointer">
+            <input type="checkbox" className="sr-only peer" checked={isAutoScroll} onChange={toggleAutoScroll} />
+            <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-gray-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gray-800"></div>
+            <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Auto Scroll</span>
+          </label>
+
           <button
             className="size-[34px] flex items-center justify-center rounded-full bg-gray-800 p-1 disabled:cursor-not-allowed disabled:bg-gray-300"
             disabled={isDisabled || !chatInput.trim().length}

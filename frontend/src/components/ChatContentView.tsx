@@ -17,13 +17,16 @@ export function ChatContentView() {
   const { lastCompletion, streamCompletion } = useCompletion();
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const isStreaming = useChatStore(s => s.isStreaming);
+  const isAutoScroll = useChatStore(s => s.isAutoScroll);
   const messages = useChatStore(s => s.messages);
   const setMessage = useChatStore(s => s.setMessage);
   const setMessages = useChatStore(s => s.setMessages);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [lastCompletion?.content]);
+    if (isAutoScroll) {
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [isAutoScroll, lastCompletion?.content]);
 
   useEffect(() => {
     if (isError) {
