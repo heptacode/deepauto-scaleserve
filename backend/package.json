@@ -7,7 +7,6 @@
     "start": "tsx watch src/index",
     "build": "tsc"
   },
-  "packageManager": "pnpm@10.11.0",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^5.1.0",
@@ -20,5 +19,6 @@
     "@types/express": "^5.0.3",
     "@types/morgan": "^1.9.10",
     "tsx": "^4.20.3"
-  }
+  },
+  "packageManager": "pnpm@10.11.0"
 }
