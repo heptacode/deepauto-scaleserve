@@ -52,3 +52,34 @@ pnpm dev
 ```bash
 pnpm build
 ```
+
+---
+
+## Project Details
+
+### Tech Stack
+
+| Category              |  Library/Tool           |  Reason for selection                                                                                             |
+| --------------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **Monorepo**          | `pnpm workspace`        | Faster installations, efficient dependency management, and strict resolution                                      |
+| **Routing**           | `react-router-dom`      | To identify each chat by its `chatId` in the path param                                                           |
+| **Data Fetching**     | `@tanstack/react-query` | Provides caching, deduplication, retries, and query invalidation, minimizing the need for manual state management |
+| **Global State Mgmt** | `zustand`               | Minimal boilerplate code, low learning curve, and high maintainability and readability                            |
+| **Styling**           | `tailwindcss`           | Allows for a fast start and makes it easy to follow the design guidelines                                         |
+
+### Directory Structure
+
+```
+deepauto-scaleserve
+├── backend               # Backend code
+├── frontend              # Frontend code
+│   ├── src
+│   │   ├── components  # Reusable components
+│   │   ├── hooks       # Reusable hooks
+│   │   ├── pages       # Page components
+│   │   ├── remotes     # Collection of REST endpoints
+│   │   ├── stores      # Global zustand stores
+├── pnpm-workspace.yaml   # pnpm workspace configuration
+├── scripts
+└── shared                # Shared resources
+```
