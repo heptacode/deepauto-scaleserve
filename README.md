@@ -16,6 +16,13 @@
 ./scripts/setup.sh
 ```
 
+This setup script includes the following steps.
+
+1. Install nvm if not installed
+2. Install required Node.js version
+3. Enable corepack and install pnpm
+4. Install project dependencies
+
 ### Preview Live Demo
 
 > ✨ This will run a live demo server for both frontend & backend.
