@@ -35,6 +35,9 @@ pnpm preview
 pnpm dev
 ```
 
+- Frontend: http://localhost:5173
+- Backend: http://localhost:3000
+
 ### Build
 
 > 🌐 This will build the app for production.
