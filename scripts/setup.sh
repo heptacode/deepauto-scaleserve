@@ -52,3 +52,5 @@ echo "⚡ Running pnpm install..."
 pnpm install
 
 echo "✅ Environment setup complete!"
+
+set +e

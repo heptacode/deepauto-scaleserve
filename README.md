@@ -13,7 +13,7 @@
 > ⚡ Run this script for fastest setup.
 
 ```bash
-./scripts/setup.sh
+source ./scripts/setup.sh
 ```
 
 This setup script includes the following steps.
